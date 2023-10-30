@@ -4,37 +4,41 @@ import Promise from "bluebird";
 import applicationException from "../service/applicationException";
 import mongoConverter from "../service/mongoConverter";
 
-const workoutSchema = new mongoose.Schema(
+const trendingCardSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true },
-    exercises: [],
-    rating: { type: Number, required: true },
-    minutes: { type: Number, required: true },
-    calories: { type: Number, required: true },
-    description: { type: String, required: true },
-    image: { type: String },
+    title: { type: String, required: true, unique: true },
+    servings: { type: Number, required: true },
+    readyinMinutes: { type: Number, required: true },
+    //exercises: [],
+    //rating: { type: Number, required: true },
+    //minutes: { type: Number, required: true },
+    //description: { type: String, required: true },
   },
   {
-    collection: "workout",
+    collection: "trendingCard",
   }
 );
 
-const WorkoutModel = mongoose.model("workout", workoutSchema);
+const TrendingCardModel = mongoose.model("trendingCard", trendingCardSchema);
 
 const createNewOrUpdate = (user) => {
   console.log(user);
   return Promise.resolve()
     .then(() => {
       if (!user.id) {
-        return new WorkoutModel(user).save().then((result) => {
+        return new TrendingCardModel(user).save().then((result) => {
           if (result) {
             return mongoConverter(result);
           }
         });
       } else {
-        return WorkoutModel.findByIdAndUpdate(user.id, _.omit(user, "id"), {
-          new: true,
-        });
+        return TrendingCardModel.findByIdAndUpdate(
+          user.id,
+          _.omit(user, "id"),
+          {
+            new: true,
+          }
+        );
       }
     })
     .catch((error) => {
@@ -50,7 +54,7 @@ const createNewOrUpdate = (user) => {
 };
 
 const getByEmailOrName = async (name) => {
-  const result = await WorkoutModel.findOne({
+  const result = await TrendingCardModel.findOne({
     $or: [{ email: name }, { name: name }],
   });
   if (result) {
@@ -64,7 +68,7 @@ const getByEmailOrName = async (name) => {
 
 const get = async (id) => {
   console.log(id);
-  const result = await WorkoutModel.findOne({ _id: id });
+  const result = await TrendingCardModel.findOne({ _id: id });
   if (result) {
     return mongoConverter(result);
   }
@@ -75,7 +79,7 @@ const get = async (id) => {
 };
 
 const getAll = async (id) => {
-  const result = await WorkoutModel.find({});
+  const result = await TrendingCardModel.find({});
   if (result) {
     return mongoConverter(result);
   }
@@ -86,7 +90,7 @@ const getAll = async (id) => {
 };
 
 const removeById = async (id) => {
-  return await WorkoutModel.findByIdAndRemove(id);
+  return await TrendingCardModel.findByIdAndRemove(id);
 };
 
 export default {
@@ -96,5 +100,5 @@ export default {
   removeById: removeById,
   getAll,
 
-  model: WorkoutModel,
+  model: TrendingCardModel,
 };

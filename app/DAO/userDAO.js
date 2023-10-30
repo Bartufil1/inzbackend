@@ -3,36 +3,48 @@ import * as _ from "lodash";
 import Promise from "bluebird";
 import applicationException from "../service/applicationException";
 import mongoConverter from "../service/mongoConverter";
+import uniqueValidator from "mongoose-unique-validator";
 
-const workoutSchema = new mongoose.Schema(
+const userRole = {
+  admin: "admin",
+  user: "user",
+};
+
+const userRoles = [userRole.admin, userRole.user];
+
+const userSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true },
-    exercises: [],
-    rating: { type: Number, required: true },
-    minutes: { type: Number, required: true },
-    calories: { type: Number, required: true },
-    description: { type: String, required: true },
-    image: { type: String },
+    email: { type: String, required: true, unique: true },
+    username: { type: String, required: true, unique: true },
+    role: {
+      type: String,
+      enum: userRoles,
+      default: userRole.admin,
+      required: false,
+    },
+    active: { type: Boolean, default: true, required: false },
+    isAdmin: { type: Boolean, default: true, required: false },
   },
   {
-    collection: "workout",
+    collection: "user",
   }
 );
 
-const WorkoutModel = mongoose.model("workout", workoutSchema);
+userSchema.plugin(uniqueValidator);
+
+const UserModel = mongoose.model("user", userSchema);
 
 const createNewOrUpdate = (user) => {
-  console.log(user);
   return Promise.resolve()
     .then(() => {
       if (!user.id) {
-        return new WorkoutModel(user).save().then((result) => {
+        return new UserModel(user).save().then((result) => {
           if (result) {
             return mongoConverter(result);
           }
         });
       } else {
-        return WorkoutModel.findByIdAndUpdate(user.id, _.omit(user, "id"), {
+        return UserModel.findByIdAndUpdate(user.id, _.omit(user, "id"), {
           new: true,
         });
       }
@@ -50,7 +62,7 @@ const createNewOrUpdate = (user) => {
 };
 
 const getByEmailOrName = async (name) => {
-  const result = await WorkoutModel.findOne({
+  const result = await UserModel.findOne({
     $or: [{ email: name }, { name: name }],
   });
   if (result) {
@@ -63,19 +75,7 @@ const getByEmailOrName = async (name) => {
 };
 
 const get = async (id) => {
-  console.log(id);
-  const result = await WorkoutModel.findOne({ _id: id });
-  if (result) {
-    return mongoConverter(result);
-  }
-  throw applicationException.new(
-    applicationException.NOT_FOUND,
-    "User not found"
-  );
-};
-
-const getAll = async (id) => {
-  const result = await WorkoutModel.find({});
+  const result = await UserModel.findOne({ _id: id });
   if (result) {
     return mongoConverter(result);
   }
@@ -86,7 +86,7 @@ const getAll = async (id) => {
 };
 
 const removeById = async (id) => {
-  return await WorkoutModel.findByIdAndRemove(id);
+  return await UserModel.findByIdAndRemove(id);
 };
 
 export default {
@@ -94,7 +94,7 @@ export default {
   getByEmailOrName: getByEmailOrName,
   get: get,
   removeById: removeById,
-  getAll,
 
-  model: WorkoutModel,
+  userRole: userRole,
+  model: UserModel,
 };

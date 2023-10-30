@@ -12,7 +12,17 @@ const create = (context) => {
   const getAll = async () => {
     const workout = await workoutDAO.getAll();
     if (workout) {
-      return workout;
+      console.log(workout);
+      const newData = await Promise.all(
+        workout.map(async (w) => {
+          let obj = w;
+          obj.exercises = await exerciseDAO.getByIds(w.exercises);
+          return obj;
+        })
+      );
+      console.log(newData);
+      const d2 = newData.map((d) => {});
+      return newData;
     }
   };
 

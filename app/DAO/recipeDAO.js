@@ -3,36 +3,37 @@ import * as _ from "lodash";
 import Promise from "bluebird";
 import applicationException from "../service/applicationException";
 import mongoConverter from "../service/mongoConverter";
+import uniqueValidator from "mongoose-unique-validator";
 
-const workoutSchema = new mongoose.Schema(
+const recipeSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true },
-    exercises: [],
-    rating: { type: Number, required: true },
-    minutes: { type: Number, required: true },
-    calories: { type: Number, required: true },
-    description: { type: String, required: true },
-    image: { type: String },
+    title: { type: String, required: true, unique: true },
+    readyinMinutes: { type: Number, required: true },
+    servings: { type: Number, required: true },
+    aggregateLikes: { type: Number, required: true },
+    healthScore: { type: Number, required: true },
+    instructions: { type: String, required: true },
+    dishTypes: { type: String, required: true },
+    extendedIngredients: [],
   },
   {
-    collection: "workout",
+    collection: "recipe",
   }
 );
 
-const WorkoutModel = mongoose.model("workout", workoutSchema);
+const RecipeModel = mongoose.model("recipe", recipeSchema);
 
 const createNewOrUpdate = (user) => {
-  console.log(user);
   return Promise.resolve()
     .then(() => {
       if (!user.id) {
-        return new WorkoutModel(user).save().then((result) => {
+        return new RecipeModel(user).save().then((result) => {
           if (result) {
             return mongoConverter(result);
           }
         });
       } else {
-        return WorkoutModel.findByIdAndUpdate(user.id, _.omit(user, "id"), {
+        return RecipeModel.findByIdAndUpdate(user.id, _.omit(user, "id"), {
           new: true,
         });
       }
@@ -50,7 +51,7 @@ const createNewOrUpdate = (user) => {
 };
 
 const getByEmailOrName = async (name) => {
-  const result = await WorkoutModel.findOne({
+  const result = await RecipeModel.findOne({
     $or: [{ email: name }, { name: name }],
   });
   if (result) {
@@ -63,8 +64,7 @@ const getByEmailOrName = async (name) => {
 };
 
 const get = async (id) => {
-  console.log(id);
-  const result = await WorkoutModel.findOne({ _id: id });
+  const result = await RecipeModel.findOne({ _id: id });
   if (result) {
     return mongoConverter(result);
   }
@@ -75,7 +75,18 @@ const get = async (id) => {
 };
 
 const getAll = async (id) => {
-  const result = await WorkoutModel.find({});
+  const result = await RecipeModel.find({});
+  if (result) {
+    return mongoConverter(result);
+  }
+  throw applicationException.new(
+    applicationException.NOT_FOUND,
+    "User not found"
+  );
+};
+
+const getByIds = async (ids) => {
+  const result = await RecipeModel.find({ _id: { $in: ids } });
   if (result) {
     return mongoConverter(result);
   }
@@ -86,7 +97,7 @@ const getAll = async (id) => {
 };
 
 const removeById = async (id) => {
-  return await WorkoutModel.findByIdAndRemove(id);
+  return await RecipeModel.findByIdAndRemove(id);
 };
 
 export default {
@@ -95,6 +106,7 @@ export default {
   get: get,
   removeById: removeById,
   getAll,
+  getByIds,
 
-  model: WorkoutModel,
+  model: RecipeModel,
 };

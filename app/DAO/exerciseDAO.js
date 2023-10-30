@@ -10,6 +10,8 @@ const exerciseSchema = new mongoose.Schema(
     name: { type: String, required: true, unique: true },
     time: { type: String, required: true },
     set: { type: Number, required: true },
+    image: { type: String },
+    sex: { type: String, required: true, default: "Man" },
   },
   {
     collection: "exercise",
