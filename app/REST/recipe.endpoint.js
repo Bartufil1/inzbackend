@@ -38,7 +38,7 @@ const recipeEndpoint = (router) => {
     }
   });
 
-  router.get("/api/recipe/get/:id", async (request, response, next) => {
+  router.get("/api/recipe/get/:id", auth, async (request, response, next) => {
     try {
       let result = await businessContainer
         .getRecipeManager(request)

@@ -30,7 +30,7 @@ const workoutEndpoint = (router) => {
     }
   );
 
-  router.get("/api/workout/getAll", async (request, response, next) => {
+  router.get("/api/workout/getAll", auth, async (request, response, next) => {
     try {
       let result = await businessContainer.getWorkoutManager(request).getAll();
       response.status(200).send(result);
