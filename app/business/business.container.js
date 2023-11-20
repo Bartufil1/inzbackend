@@ -4,6 +4,7 @@ import categoryManager from "./categoryCard.manager";
 import trendingManager from "./trendingCard.manager";
 import recipeManager from "./recipe.manager";
 import userManager from "./user.manager";
+import passwordResetManager from "./passwordReset.manager";
 
 function getter(manager, request) {
   return function () {
@@ -16,4 +17,5 @@ export default {
   getWorkoutManager: getter(workoutManager),
   getRecipeManager: getter(recipeManager),
   getUserManager: getter(userManager),
+  getPasswordManager: getter(passwordResetManager),
 };

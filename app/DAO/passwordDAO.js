@@ -21,6 +21,7 @@ const passwordSchema = new mongoose.Schema(
 const PasswordModel = mongoose.model("password", passwordSchema);
 
 const createOrUpdate = async (data) => {
+  console.log(data);
   const result = await PasswordModel.findOneAndUpdate(
     { userId: data.userId },
     _.omit(data, "id"),
@@ -32,6 +33,7 @@ const createOrUpdate = async (data) => {
       password: data.password,
     }).save();
     if (result) {
+      console.log(zapis);
       return mongoConverter(result);
     }
   }

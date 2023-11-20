@@ -5,9 +5,10 @@ import auth from "../middleware/auth";
 const userEndpoint = (router) => {
   router.post("/api/user/auth", async (request, response, next) => {
     try {
+      console.log(request.body);
       let result = await businessContainer
         .getUserManager(request)
-        .authenticate(request.body.login, request.body.password);
+        .authenticate(request.body.username, request.body.password);
       response.status(200).send(result);
     } catch (error) {
       applicationException.errorHandler(error, response);
@@ -15,6 +16,7 @@ const userEndpoint = (router) => {
   });
 
   router.post("/api/user/create", async (request, response, next) => {
+    console.log(request.body);
     try {
       const result = await businessContainer
         .getUserManager(request)

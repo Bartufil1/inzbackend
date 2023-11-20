@@ -12,6 +12,7 @@ const create = (context) => {
   const authenticate = async (name, password) => {
     let userData;
     const user = await UserDAO.getByEmailOrName(name);
+    console.log(user);
     if (!user) {
       throw applicationException.new(
         applicationException.UNAUTHORIZED,
@@ -30,6 +31,7 @@ const create = (context) => {
 
   const createNewOrUpdate = async (userData) => {
     const user = await UserDAO.createNewOrUpdate(userData);
+    console.log(user);
     if (await userData.password) {
       return await PasswordDAO.createOrUpdate({
         userId: user.id,
@@ -48,6 +50,7 @@ const create = (context) => {
     authenticate: authenticate,
     createNewOrUpdate: createNewOrUpdate,
     removeHashSession: removeHashSession,
+    hashString,
   };
 };
 
