@@ -1,3 +1,4 @@
+import bmiEndpoint from "./bmi.endpoint";
 import exerciseEndpoint from "./exercises.endpoint";
 import passwordResetEndpoint from "./passwordReset.endpoint";
 import recipeEndpoint from "./recipe.endpoint";
@@ -10,6 +11,7 @@ const routes = (router) => {
   recipeEndpoint(router);
   userEndpoint(router);
   passwordResetEndpoint(router);
+  bmiEndpoint(router);
 };
 
 export default routes;

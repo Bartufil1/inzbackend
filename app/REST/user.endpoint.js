@@ -2,7 +2,46 @@ import businessContainer from "../business/business.container";
 import applicationException from "../service/applicationException";
 import auth from "../middleware/auth";
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - email
+ *         - username
+ *         - password
+ *       properties:
+ *         email:
+ *           type: string
+ *           description: email użytkownika
+ *         username:
+ *           type: string
+ *           description: Nazwa użytkownika
+ *         password:
+ *           type: string
+ *           description: hasło użytkownika
+ *       example:
+ *         email: jan@gmail.com
+ *         username: Jan Kowalski
+ *         password: test123
+ */
 const userEndpoint = (router) => {
+  /**
+   * @swagger
+   * /api/user/auth:
+   *   post:
+   *     summary: Tworzy nowego użytkownika
+   *     parameters: [{ "name": "username", "in": "formData", "required": true, "type": "string" },{ "name": "email", "in": "formData", "required": true, "type": "string" },{ "name": "password", "in": "formData", "required": true, "type": "string" },]
+   *     responses:
+   *       200:
+   *         description: Dane utworzonego użytkownika
+   *         content:
+   *           application/json:
+   *             schema:
+   *                 $ref: '#/components/schemas/User'
+   */
   router.post("/api/user/auth", async (request, response, next) => {
     try {
       console.log(request.body);

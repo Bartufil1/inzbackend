@@ -32,6 +32,7 @@ const exerciseEndpoint = (router) => {
   router.get("/api/exercise/getAll", async (request, response, next) => {
     try {
       let result = await businessContainer.getExerciseManager(request).getAll();
+      console.log(result);
       response.status(200).send(result);
     } catch (error) {
       applicationException.errorHandler(error, response);

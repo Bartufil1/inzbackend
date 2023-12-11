@@ -5,37 +5,47 @@ import applicationException from "../service/applicationException";
 import mongoConverter from "../service/mongoConverter";
 import uniqueValidator from "mongoose-unique-validator";
 
-const recipeSchema = new mongoose.Schema(
+const bmiSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true, unique: true },
-    readyinMinutes: { type: Number, required: true },
-    servings: { type: Number, required: true },
-    aggregateLikes: { type: Number, required: true },
-    healthScore: { type: Number, required: true },
-    instructions: { type: String, required: true },
-    dishTypes: { type: String, required: true },
-    extendedIngredients: [],
-    image: { type: String, required: false },
+    weight: { type: String, required: true },
+    height: { type: String, required: true },
+    sex: { type: String, required: true },
+    activityMode: { type: String, required: true },
+    bmi: { type: String, required: true },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+      unique: true,
+    },
   },
   {
-    collection: "recipe",
+    collection: "bmi",
   }
 );
 
-const RecipeModel = mongoose.model("recipe", recipeSchema);
-
+const BmiModel = mongoose.model("bmi", bmiSchema);
+const getByUserId = async (id) => {
+  const result = await BmiModel.findOne({
+    userId: id,
+  });
+  console.log(result);
+  if (result) {
+    return result;
+  }
+};
 const createNewOrUpdate = (user) => {
   console.log(user);
   return Promise.resolve()
     .then(() => {
       if (!user.id) {
-        return new RecipeModel(user).save().then((result) => {
+        return new BmiModel(user).save().then((result) => {
           if (result) {
             return mongoConverter(result);
           }
         });
       } else {
-        return RecipeModel.findByIdAndUpdate(user.id, _.omit(user, "id"), {
+        return BmiModel.findByIdAndUpdate(user.id, _.omit(user, "id"), {
           new: true,
         });
       }
@@ -54,7 +64,7 @@ const createNewOrUpdate = (user) => {
 };
 
 const getByEmailOrName = async (name) => {
-  const result = await RecipeModel.findOne({
+  const result = await BmiModel.findOne({
     $or: [{ email: name }, { name: name }],
   });
   if (result) {
@@ -67,7 +77,7 @@ const getByEmailOrName = async (name) => {
 };
 
 const get = async (id) => {
-  const result = await RecipeModel.findOne({ _id: id });
+  const result = await BmiModel.findOne({ _id: id });
   if (result) {
     return mongoConverter(result);
   }
@@ -110,6 +120,7 @@ export default {
   remove: removeById,
   getAll,
   getByIds,
+  getByUserId,
 
-  model: RecipeModel,
+  model: BmiModel,
 };

@@ -74,6 +74,7 @@ const get = async (id) => {
 const getAll = async (id) => {
   const result = await ExerciseModel.find({});
   if (result) {
+    console.log(result);
     return mongoConverter(result);
   }
   throw applicationException.new(

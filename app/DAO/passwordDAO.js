@@ -33,7 +33,6 @@ const createOrUpdate = async (data) => {
       password: data.password,
     }).save();
     if (result) {
-      console.log(zapis);
       return mongoConverter(result);
     }
   }

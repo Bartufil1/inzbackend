@@ -5,6 +5,7 @@ import trendingManager from "./trendingCard.manager";
 import recipeManager from "./recipe.manager";
 import userManager from "./user.manager";
 import passwordResetManager from "./passwordReset.manager";
+import bmiManager from "./bmi.manager";
 
 function getter(manager, request) {
   return function () {
@@ -18,4 +19,5 @@ export default {
   getRecipeManager: getter(recipeManager),
   getUserManager: getter(userManager),
   getPasswordManager: getter(passwordResetManager),
+  getBmiManager: getter(bmiManager),
 };

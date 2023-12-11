@@ -18,10 +18,11 @@ const recipeEndpoint = (router) => {
     "/api/recipe/remove/:id",
     auth,
     async (request, response, next) => {
+      console.log(request.body.id);
       try {
         let result = await businessContainer
           .getRecipeManager(request)
-          .remove(request.body.id);
+          .remove(request.params.id);
         response.status(200).send(result);
       } catch (error) {
         applicationException.errorHandler(error, response);

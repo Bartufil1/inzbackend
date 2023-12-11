@@ -2,12 +2,11 @@ import applicationException from "../service/applicationException";
 import auth from "../middleware/auth";
 import businessContainer from "../business/business.container";
 
-const workoutEndpoint = (router) => {
-  router.post("/api/workout/create", async (request, response, next) => {
-    console.log(request.body);
+const bmiEndpoint = (router) => {
+  router.post("/api/bmi/create", async (request, response, next) => {
     try {
       const result = await businessContainer
-        .getWorkoutManager(request)
+        .getBmiManager(request)
         .createNewOrUpdate(request.body);
       response.status(200).send(result);
     } catch (error) {
@@ -16,12 +15,13 @@ const workoutEndpoint = (router) => {
   });
 
   router.delete(
-    "/api/workout/remove/:id",
+    "/api/bmi/remove/:id",
     auth,
     async (request, response, next) => {
+      console.log(request.body.id);
       try {
         let result = await businessContainer
-          .getWorkoutManager(request)
+          .getBmiManager(request)
           .remove(request.params.id);
         response.status(200).send(result);
       } catch (error) {
@@ -30,35 +30,19 @@ const workoutEndpoint = (router) => {
     }
   );
 
-  router.get("/api/workout/getAll", auth, async (request, response, next) => {
+  router.get("/api/bmi/getAll", async (request, response, next) => {
     try {
-      let result = await businessContainer.getWorkoutManager(request).getAll();
+      let result = await businessContainer.getBmiManager(request).getAll();
       response.status(200).send(result);
     } catch (error) {
       applicationException.errorHandler(error, response);
     }
   });
 
-  router.get(
-    "/api/workout/getAllRandom",
-    auth,
-    async (request, response, next) => {
-      try {
-        let result = await businessContainer
-          .getWorkoutManager(request)
-          .getAllRandom(request.user.userId);
-        response.status(200).send(result);
-      } catch (error) {
-        applicationException.errorHandler(error, response);
-      }
-    }
-  );
-
-  router.get("/api/workout/get/:id", async (request, response, next) => {
+  router.get("/api/bmi/get/:id", auth, async (request, response, next) => {
     try {
-      console.log("work");
       let result = await businessContainer
-        .getWorkoutManager(request)
+        .getBmiManager(request)
         .get(request.params.id);
       response.status(200).send(result);
     } catch (error) {
@@ -67,4 +51,4 @@ const workoutEndpoint = (router) => {
   });
 };
 
-export default workoutEndpoint;
+export default bmiEndpoint;

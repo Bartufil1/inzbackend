@@ -93,7 +93,7 @@ export default {
   createNewOrUpdate: createNewOrUpdate,
   getByEmailOrName: getByEmailOrName,
   get: get,
-  removeById: removeById,
+  remove: removeById,
   getAll,
 
   model: WorkoutModel,
