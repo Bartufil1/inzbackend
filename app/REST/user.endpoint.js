@@ -32,15 +32,39 @@ const userEndpoint = (router) => {
    * @swagger
    * /api/user/auth:
    *   post:
-   *     summary: Tworzy nowego użytkownika
-   *     parameters: [{ "name": "username", "in": "formData", "required": true, "type": "string" },{ "name": "email", "in": "formData", "required": true, "type": "string" },{ "name": "password", "in": "formData", "required": true, "type": "string" },]
+   *     summary: Autentykacja użytkownika
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - username
+   *               - password
+   *             properties:
+   *               username:
+   *                 type: string
+   *                 description: Nazwa użytkownika
+   *               password:
+   *                 type: string
+   *                 description: Hasło użytkownika
    *     responses:
    *       200:
-   *         description: Dane utworzonego użytkownika
+   *         description: Autentykacja udana
    *         content:
    *           application/json:
    *             schema:
-   *                 $ref: '#/components/schemas/User'
+   *               type: object
+   *               properties:
+   *                 userId:
+   *                   type: string
+   *                   description: Identyfikator użytkownika
+   *                 token:
+   *                   type: string
+   *                   description: Token autentykacyjny
+   *       401:
+   *         description: Błąd autentykacji
    */
   router.post("/api/user/auth", async (request, response, next) => {
     try {
@@ -53,6 +77,25 @@ const userEndpoint = (router) => {
       applicationException.errorHandler(error, response);
     }
   });
+  /**
+   * @swagger
+   * /api/user/create:
+   *   post:
+   *     summary: Tworzy nowego użytkownika
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/User'
+   *     responses:
+   *       200:
+   *         description: Dane utworzonego użytkownika
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/User'
+   */
 
   router.post("/api/user/create", async (request, response, next) => {
     console.log(request.body);
@@ -65,6 +108,25 @@ const userEndpoint = (router) => {
       applicationException.errorHandler(error, response);
     }
   });
+
+  /**
+   * @swagger
+   * /api/user/logout/{userId}:
+   *   delete:
+   *     summary: Wylogowuje użytkownika
+   *     parameters:
+   *       - in: path
+   *         name: userId
+   *         required: true
+   *         description: Identyfikator użytkownika do wylogowania
+   *         schema:
+   *           type: string
+   *     security:
+   *       - BearerAuth: []
+   *     responses:
+   *       200:
+   *         description: Potwierdzenie wylogowania
+   */
 
   router.delete(
     "/api/user/logout/:userId",

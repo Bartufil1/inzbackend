@@ -63,6 +63,9 @@ routes(app);
 app.get("/*", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
-app.listen(config.port, () => {
-  console.info(`Server is running at ${config.port}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(config.port, () => {
+    console.info(`Server is running at ${config.port}`);
+  });
+}
+export default app;

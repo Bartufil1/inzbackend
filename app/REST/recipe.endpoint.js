@@ -16,7 +16,7 @@ const recipeEndpoint = (router) => {
 
   router.delete(
     "/api/recipe/remove/:id",
-    auth,
+    //auth,
     async (request, response, next) => {
       console.log(request.body.id);
       try {
@@ -39,16 +39,20 @@ const recipeEndpoint = (router) => {
     }
   });
 
-  router.get("/api/recipe/get/:id", auth, async (request, response, next) => {
-    try {
-      let result = await businessContainer
-        .getRecipeManager(request)
-        .get(request.params.id);
-      response.status(200).send(result);
-    } catch (error) {
-      applicationException.errorHandler(error, response);
+  router.get(
+    "/api/recipe/get/:id",
+    //auth,
+    async (request, response, next) => {
+      try {
+        let result = await businessContainer
+          .getRecipeManager(request)
+          .get(request.params.id);
+        response.status(200).send(result);
+      } catch (error) {
+        applicationException.errorHandler(error, response);
+      }
     }
-  });
+  );
 };
 
 export default recipeEndpoint;

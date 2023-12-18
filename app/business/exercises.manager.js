@@ -16,7 +16,7 @@ const create = (context) => {
   };
 
   const remove = async (id) => {
-    return await exerciseDAO.remove(id);
+    return await exerciseDAO.removeById(id);
   };
 
   return {

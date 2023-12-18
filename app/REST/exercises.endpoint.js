@@ -16,7 +16,7 @@ const exerciseEndpoint = (router) => {
 
   router.delete(
     "/api/exercise/remove/:id",
-    auth,
+    //auth,
     async (request, response, next) => {
       try {
         let result = await businessContainer
