@@ -11,7 +11,7 @@ Obejmuje rejestarcje, logowanie oraz resetowanie hasła. Ponadto otrzymując dos
 * Wybrać potrawę i wyświetlić szczegółowy przepis by ją przygotować,
 * Skorzystać z wbudowanej wyszukiwarki by znaleźć interesującą go potrawę,
 * Wybrać intresujący go plan treningowy i wyświetlić szczegóły planu.
-* Podjąc wyzwanie
+* Podjąc wyzwanie <br>
 Dzięki aplikacji użytkownik przygotuje smaczny i zdrowy posiłek dla siebie oraz bliskich na bazie wybranego przepisu oraz wykona ćwiczenia, wykorzystując spersonalizowane plany treningowe, przygotowane indywidualnie dla niego.
 
 ### Uruchomienie projektu (front) 
@@ -48,7 +48,7 @@ Przejeście do odpowiedniego folderu <br>
 | /api/user/auth                   | POST   | Autentykacja użytkownika                    | User Controller             |
 | /api/user/logout/:{Id}           | DELETE | Wylogowuje użytkownika                       | User Controller             |
 
-##Scenariusze dla testera manualnego 
+## Scenariusze dla testera manualnego 
 | CASE ID | OPIS                                      | Kroki testowe                                                                                                                                                                                                                                    | Oczekiwany wynik                                                                                                               |
 |---------|-------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
 | TC_01   | Rejestracja w systemie                     | 1. Przejdź do ekranu logowania w serwisie.<br/>2. Wybierz pole "Zarejestruj się".<br/>3. Wypełnij formularz rejestracji.<br/>4. Wybierz pole "Zarejestruj się".<br/>5. Wprowadź dane BMI.<br/>6. Wybierz pole "Dalej". | Użytkownik zarejestruje się w serwisie. Po pomyślnej rejestracji zostanie przekierowany do okna logowania w serwisie.         |
