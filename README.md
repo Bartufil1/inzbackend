@@ -10,8 +10,8 @@ Aplikacja powstała na urządzenia mobilne przy użyciu frameworka React Native.
 Obejmuje rejestarcje, logowanie oraz resetowanie hasła. Ponadto otrzymując dostęp do zasobów apliakcji użytkownikowi zostają wyświetlone ekrany, w których może:
 * Wybrać potrawę i wyświetlić szczegółowy przepis by ją przygotować,
 * Skorzystać z wbudowanej wyszukiwarki by znaleźć interesującą go potrawę,
-* Wybrać intresujący go plan treningowy i wyświetlić szczegóły planu.
-* Podjąc wyzwanie <br>
+* Wybrać intresujący plan treningowy i wyświetlić szczegóły planu.
+<br>
 Dzięki aplikacji użytkownik przygotuje smaczny i zdrowy posiłek dla siebie oraz bliskich na bazie wybranego przepisu oraz wykona ćwiczenia, wykorzystując spersonalizowane plany treningowe, przygotowane indywidualnie dla niego.
 
 ### Przykładowy screen jednego z ekranów aplikacji
@@ -21,7 +21,6 @@ Dzięki aplikacji użytkownik przygotuje smaczny i zdrowy posiłek dla siebie or
 * npm start 
 * npm run android
 ### Uruchomienie testów jednostkowych oraz integracyjnych 
-Przejeście do odpowiedniego folderu <br>
 * npm run test
   
 ## Dokumentacja API
