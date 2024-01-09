@@ -1,6 +1,6 @@
 # Kurs: Testowanie i Jakość Oprogramowania
 
-## Autor: BF
+## Autor: Bartłomiej Filipski 
 
 ## Temat Projektu: Aplikacja Treningowo-Żywieniowa
 
@@ -14,12 +14,14 @@ Obejmuje rejestarcje, logowanie oraz resetowanie hasła. Ponadto otrzymując dos
 * Podjąc wyzwanie <br>
 Dzięki aplikacji użytkownik przygotuje smaczny i zdrowy posiłek dla siebie oraz bliskich na bazie wybranego przepisu oraz wykona ćwiczenia, wykorzystując spersonalizowane plany treningowe, przygotowane indywidualnie dla niego.
 
+### Przykładowy screen jednego z ekranów aplikacji
+![ScreenshotAPP](https://github.com/Bartufil1/inzbackend/assets/104689537/c74097c6-3623-4245-aa1c-88be4f6e5e09)
+
 ### Uruchomienie projektu (front) 
-* npm start <br>
+* npm start 
 * npm run android
 ### Uruchomienie testów jednostkowych oraz integracyjnych 
 Przejeście do odpowiedniego folderu <br>
-* cd Backend
 * npm run test
   
 ## Dokumentacja API
@@ -69,5 +71,6 @@ Przejeście do odpowiedniego folderu <br>
 * HTML 
 * CSS 
 * Node.js
-* Expres.js
+* Express.js
+* MongoDB
 * Mongoose
